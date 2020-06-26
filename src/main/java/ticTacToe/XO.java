@@ -1,5 +1,5 @@
 package ticTacToe;
 
 public enum XO {
-    X,O
+    X,O,EMPTY
 }
