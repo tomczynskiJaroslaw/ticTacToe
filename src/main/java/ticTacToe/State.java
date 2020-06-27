@@ -3,7 +3,6 @@ package ticTacToe;
 
 public class State implements Correct{
     XO xo;
-    State state;
     Model model;
     Stetas stetas;
 
@@ -13,11 +12,6 @@ public class State implements Correct{
         this.stetas = stetas;
     }
 
-    public State setState(State state) {
-        this.state = state;
-        return this;
-    }
-
     public void next(int x,int y) {
         model.setCharacter(xo,x,y);
         System.out.println("dfthdter");
@@ -25,6 +19,6 @@ public class State implements Correct{
 
     @Override
     public void correct() {
-        stetas.next(state);
+        stetas.next();
     }
 }

@@ -7,25 +7,21 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class TicTacToe extends Application {
 
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         int count = 3;
-        Win win = null;
-        Correct correct = null;
-
-        Model model = new Model(count,correct);
-
-        Stetas stetas = new Stetas();
-
+        Model model = new Model(count,new ArrayList<>());
+        Stetas stetas = new Stetas(new ArrayList<>());
         State stateX = new State(XO.X,model,stetas);
-        State stateO = new State(XO.O,model,stetas).setState(stateX);
+        State stateO = new State(XO.O,model,stetas);
+        stetas.addCorrects(stateO,stateX);
+        model.addListenerCorrect(stetas);
 
-        stateX.setState(stateO);
-
-        stetas.setState(stateO);
 
         VBox vBox = new VBox();
         for (int i=0;i<count;i++){
@@ -35,7 +31,8 @@ public class TicTacToe extends Application {
                 int finalI = i;
                 int finalJ = j;
                 button.setOnAction((e)->{
-                    stetas.next(finalI, finalJ);
+                    stetas.correct(finalI,finalJ);
+                    button.setText(model.get(finalI,finalJ).toString());
                 });
                 hBox.getChildren().add(button);
             }
