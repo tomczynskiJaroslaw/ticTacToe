@@ -4,36 +4,52 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 
 class ModelTest {
-//    @Test
-//    public void testSetCharacter(){
-//        Assertions.assertFalse(
-//                new Model(Mockito.mock(Win.class), mock(Correct.class))
-//                        .setCharacter(XO.O,0,0)
-//                        .setCharacter(XO.O,1,1)
-//                        .setCharacter(XO.O,0,0)
-//                        .isCorrect()
-//        );
-//    }
 
-//    @Test
-//    public void testIsWin(){
-//        Win win = Mockito.mock(Win.class);
-//        Model model = new Model(3)
-//                .setCharacter(XO.O,0,0)
-//                .setCharacter(XO.O,1,1)
-//                .setCharacter(XO.O,2,2);
-//        Mockito.verify(win).win(XO.O);
-//    }
-//
-//    @Test
-//    public void testIsCorrect(){
-//        Correct correct = Mockito.mock(Correct.class);
-//        Model model = new Model(3).setCharacter(XO.X,0,0);
-//        Mockito.verify(correct).correct();
-//        model.setCharacter(XO.X,0,0);
-//        Mockito.verify(correct,never()).correct();
-//    }
+    @Test
+    public void testIsWin(){
+        Win win = mock(Win.class);
+        Model model = new Model(3, Mockito.<List>mock(List.class))
+                .setCharacter(XO.O,0,0)
+                .setCharacter(XO.O,1,1)
+                .setCharacter(XO.O,2,2);
+        verify(win).win(XO.O);
+    }
+
+    @Test
+    public void testGet(){
+
+        Assertions.assertEquals(XO.X,
+                new Model(3,
+                        mock(List.class))
+                    .setCharacter(XO.X,0,1)
+                    .get(0,1)
+        );
+    }
+
+    @Test
+    public void testSetCharacter(){
+        Model model = new Model(3,new ArrayList<>());
+        States states = mock(States.class);
+        model.addListenerStates(states);
+        model.setCharacter(XO.X,0,0);
+        model.setCharacter(XO.X,0,0);
+        verify(states,times(1)).next();
+    }
+
+    @Test
+    public void addListenerStates(){
+        List<States> list = new ArrayList<>();
+        States states = mock(States.class);
+        new Model(3,list).addListenerStates(states);
+        Assertions.assertEquals(list.get(0),states);
+    }
+
+
 }

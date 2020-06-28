@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Model {
-    List<Stetas> correct;
-    Win win;
+    private final List<States> stets;
+    private Win win;
 
-    XO[][] xos;
+    private XO[][] xos;
 
-    public Model(int count,List<Stetas> correct) {
-        this.correct=correct;
+    public Model(int count,List<States> stets) {
+        this.stets = stets;
         xos = new XO[count][count];
         for (int i=0;i<count;i++){
             for (int j=0;j<count;j++){
@@ -26,14 +26,13 @@ public class Model {
     public Model setCharacter(XO xo, int x, int y) {
         if (xos[y][x]==XO.EMPTY){
             xos[y][x]=xo;
-            correct.forEach(Stetas::next);
-            System.out.println("df");
+            stets.forEach(States::next);
         }
         return this;
     }
 
-    public void addListenerCorrect(Stetas... correct) {
-        this.correct.addAll(Arrays.asList(correct));
+    public void addListenerStates(States... stets) {
+        this.stets.addAll(Arrays.asList(stets));
     }
 
 //    public void addListenerWin(Win win) {

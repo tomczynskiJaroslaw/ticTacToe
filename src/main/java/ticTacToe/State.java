@@ -1,24 +1,22 @@
 package ticTacToe;
 
 
-public class State implements Correct{
-    XO xo;
-    Model model;
-    Stetas stetas;
+public class State{
+    private final XO xo;
+    private final Model model;
+    private final States states;
 
-    public State(XO xo, Model model, Stetas stetas) {
+    public State(XO xo, Model model, States states) {
         this.xo = xo;
         this.model = model;
-        this.stetas = stetas;
+        this.states = states;
     }
 
     public void next(int x,int y) {
         model.setCharacter(xo,x,y);
-        System.out.println("dfthdter");
     }
 
-    @Override
     public void correct() {
-        stetas.next();
+        states.next();
     }
 }

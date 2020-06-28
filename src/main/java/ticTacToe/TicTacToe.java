@@ -16,11 +16,11 @@ public class TicTacToe extends Application {
     public void start(Stage stage) {
         int count = 3;
         Model model = new Model(count,new ArrayList<>());
-        Stetas stetas = new Stetas(new ArrayList<>());
-        State stateX = new State(XO.X,model,stetas);
-        State stateO = new State(XO.O,model,stetas);
-        stetas.addCorrects(stateO,stateX);
-        model.addListenerCorrect(stetas);
+        States states = new States(new ArrayList<>());
+        State stateX = new State(XO.X,model,states);
+        State stateO = new State(XO.O,model,states);
+        states.addStates(stateO,stateX);
+        model.addListenerStates(states);
 
 
         VBox vBox = new VBox();
@@ -31,7 +31,7 @@ public class TicTacToe extends Application {
                 int finalI = i;
                 int finalJ = j;
                 button.setOnAction((e)->{
-                    stetas.correct(finalI,finalJ);
+                    states.start(finalI,finalJ);
                     button.setText(model.get(finalI,finalJ).toString());
                 });
                 hBox.getChildren().add(button);
