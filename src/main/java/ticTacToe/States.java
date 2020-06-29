@@ -13,14 +13,16 @@ public class States {
     public States(List<State> states) {
         if (states==null) throw  new NullPointerException();
         this.states = states;
-        addStates(state);
+        if (states.size()>0)
+            addListener(states.toArray(new State[1]));
     }
 
-    public void addStates(State... state) {
+    public void addListener(State... state) {
 
         this.states.addAll(Arrays.asList(state));
         this.correctIterator = this.states.iterator();
         this.state =this.correctIterator.next();
+        System.out.println(states+"\t\n\n"+correctIterator+"\t\n\n"+state);
     }
 
     public void start(int x, int y) {

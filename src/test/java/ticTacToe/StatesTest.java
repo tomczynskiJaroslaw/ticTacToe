@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +17,7 @@ class StatesTest {
     void addStates() {
         List<State> list = new ArrayList<>();
         State state = mock(State.class);
-        new States(list).addStates(state);
+        new States(list).addListener(state);
         Assertions.assertEquals(list.get(0),state);
     }
 
@@ -46,7 +45,7 @@ class StatesTest {
     }
 
     @Test
-    void nextCheckIsCirciular() {
+    void nextCheckIsCircular() {
         State state = mock(State.class);
         List<State> list = new ArrayList<>(
                 asList(

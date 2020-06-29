@@ -15,8 +15,5 @@ public class State{
     public void next(int x,int y) {
         model.setCharacter(xo,x,y);
     }
-
-    public void correct() {
-        states.next();
-    }
+    
 }

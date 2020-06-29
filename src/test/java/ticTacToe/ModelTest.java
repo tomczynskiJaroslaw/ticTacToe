@@ -5,17 +5,26 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.mockito.Mockito.*;
 
 class ModelTest {
 
     @Test
+    public void testState(){
+        State state = mock(State.class);
+        Assertions.assertEquals(state,
+                new States(new ArrayList<>(asList(state))).next()
+        );
+
+    }
+
+    @Test
     public void testIsWin(){
         Win win = mock(Win.class);
-        Model model = new Model(3, Mockito.<List>mock(List.class))
+        Model model = new Model(Mockito.<List>mock(List.class),mock(Win.class))
                 .setCharacter(XO.O,0,0)
                 .setCharacter(XO.O,1,1)
                 .setCharacter(XO.O,2,2);
@@ -26,8 +35,8 @@ class ModelTest {
     public void testGet(){
 
         Assertions.assertEquals(XO.X,
-                new Model(3,
-                        mock(List.class))
+                new Model(
+                        mock(List.class),mock(Win.class))
                     .setCharacter(XO.X,0,1)
                     .get(0,1)
         );
@@ -35,7 +44,7 @@ class ModelTest {
 
     @Test
     public void testSetCharacter(){
-        Model model = new Model(3,new ArrayList<>());
+        Model model = new Model(new ArrayList<>(),mock(Win.class));
         States states = mock(States.class);
         model.addListenerStates(states);
         model.setCharacter(XO.X,0,0);
@@ -47,7 +56,7 @@ class ModelTest {
     public void addListenerStates(){
         List<States> list = new ArrayList<>();
         States states = mock(States.class);
-        new Model(3,list).addListenerStates(states);
+        new Model(list,mock(Win.class)).addListenerStates(states);
         Assertions.assertEquals(list.get(0),states);
     }
 

@@ -9,17 +9,20 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+import static org.mockito.Mockito.mock;
+
 public class TicTacToe extends Application {
 
 
     @Override
     public void start(Stage stage) {
         int count = 3;
-        Model model = new Model(count,new ArrayList<>());
+        Win win = new Win();
+        Model model = new Model(new ArrayList<>(),win);
         States states = new States(new ArrayList<>());
         State stateX = new State(XO.X,model,states);
         State stateO = new State(XO.O,model,states);
-        states.addStates(stateO,stateX);
+        states.addListener(stateO,stateX);
         model.addListenerStates(states);
 
 
