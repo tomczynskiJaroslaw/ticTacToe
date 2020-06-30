@@ -13,10 +13,4 @@ class StateTest {
         verify(model).setCharacter(XO.O,0,0);
     }
 
-    @Test
-    void testCorrect(){
-        States states = mock(States.class);
-        new State(XO.X,mock(Model.class), states);
-        verify(states).next();
-    }
 }

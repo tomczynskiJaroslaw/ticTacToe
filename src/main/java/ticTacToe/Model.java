@@ -9,37 +9,18 @@ public class Model {
     private final int COUNT = 3;
 
     private final List<States> stets;
-    private final Win win;
+//    private final Win win;
 
     private XO[][] xos;
 
-    private WinMethod[][][] winMethod;
+    private WinMethods winMethods;
 
-    public Model(List<States> stets,Win win) {
+    public Model(List<States> stets) {
         this.stets = stets;
-        this.win = win;
+//        this.win = win;
+//        this.winMethods=winMethods;
         prepareXOS();
-        prepareWinMethod();
-    }
 
-    private void prepareWinMethod() {
-        Column column = new Column(this);
-        Row row = new Row(this);
-        DiagonalRightUp diagonalRightUp = new DiagonalRightUp(this);
-        DiagonalLeftUp diagonalLeftUp = new DiagonalLeftUp(this);
-        winMethod = new WinMethod[3][3][];
-        winMethod[0][0] = new WinMethod[]{column,row,diagonalLeftUp};
-        winMethod[2][2] = new WinMethod[]{column,row,diagonalLeftUp};
-
-        winMethod[1][1] = new WinMethod[]{column,row,diagonalLeftUp,diagonalRightUp};
-
-        winMethod[0][2] = new WinMethod[]{column,row,diagonalRightUp};
-        winMethod[2][0] = new WinMethod[]{column,row,diagonalRightUp};
-
-        winMethod[1][0] = new WinMethod[]{column,row};
-        winMethod[0][1] = new WinMethod[]{column,row};
-        winMethod[2][1] = new WinMethod[]{column,row};
-        winMethod[1][2] = new WinMethod[]{column,row};
     }
 
     private void prepareXOS() {
@@ -58,28 +39,20 @@ public class Model {
     public Model setCharacter(XO xo, int x, int y) {
         if (xos[y][x]==XO.EMPTY){
             xos[y][x]=xo;
-            if (!isWin(x,y,xo))
+            System.out.println(winMethods);
+            if (!winMethods.isWin(x,y,xo))
                 stets.forEach(States::next);
         }
         return this;
     }
 
-    private boolean isWin(int x,int y,XO xo) {
-        for (int i=0;i<winMethod[x][y].length;i++){
-            if (winMethod[x][y][i].method(x,y,xo)){
-                win.win(xo);
-                return true;
-            }
-            System.out.println(winMethod[x][y][i].getClass());
-        }
-        return false;
-    }
+
 
     public void addListenerStates(States... stets) {
         this.stets.addAll(Arrays.asList(stets));
     }
 
-//    public void addListenerWin(Win win) {
-//        if (this.win!=null) this.win=win; else new RuntimeException("two listeners but allowed only one");
-//    }
+    public void addListenerWinMethods(WinMethods winMethods) {
+        if (this.winMethods==null) this.winMethods=winMethods; else throw  new RuntimeException("two listeners but allowed only one");
+    }
 }

@@ -1,11 +1,9 @@
 package ticTacToe;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import ticTacToe.WinMethod.WinMethod;
+import ticTacToe.WinMethod.WinMethods;
 
 import java.util.ArrayList;
 
@@ -17,35 +15,20 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage stage) {
         int count = 3;
-        Win win = new Win();
-        Model model = new Model(new ArrayList<>(),win);
+        Model model = new Model(new ArrayList<>());
+        ReadOnlyModel readOnlyModel = new ReadOnlyModel(model);
         States states = new States(new ArrayList<>());
+        ButtonEnabled buttonEnabled = new ButtonEnabled();
+        Win win = new Win(buttonEnabled);
+        WinMethods winMethods = new WinMethods(new WinMethod[3][3][],readOnlyModel,win);
         State stateX = new State(XO.X,model,states);
         State stateO = new State(XO.O,model,states);
         states.addListener(stateO,stateX);
         model.addListenerStates(states);
-
-
-        VBox vBox = new VBox();
-        for (int i=0;i<count;i++){
-            HBox hBox = new HBox();
-            for (int j=0;j<count;j++){
-                Button button = new Button();
-                int finalI = i;
-                int finalJ = j;
-                button.setOnAction((e)->{
-                    states.start(finalI,finalJ);
-                    button.setText(model.get(finalI,finalJ).toString());
-                });
-                hBox.getChildren().add(button);
-            }
-            vBox.getChildren().add(hBox);
-        }
-        Scene scene = new Scene(vBox);
-        stage.setScene(scene);
-        stage.show();
-
-
+        model.addListenerWinMethods(winMethods);
+        View view = new View(stage, states, readOnlyModel);
+        System.out.println("---");
+        buttonEnabled.setView(view);
 
     }
 }

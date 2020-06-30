@@ -1,13 +1,12 @@
 package ticTacToe.WinMethod;
 
+import lombok.AllArgsConstructor;
 import ticTacToe.Model;
+import ticTacToe.ReadOnlyModel;
 import ticTacToe.XO;
-
-public class Column extends WinMethod{
-
-    public Column(Model model) {
-        super(model);
-    }
+@AllArgsConstructor
+class Column implements WinMethod{
+    private final ReadOnlyModel model;
 
     @Override
     public boolean method(int x, int y, XO xo) {

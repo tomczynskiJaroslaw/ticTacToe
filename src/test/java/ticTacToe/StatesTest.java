@@ -57,7 +57,6 @@ class StatesTest {
         States states = new States(list);
         states.next();
         states.next();
-        states.next();
         Assertions.assertEquals(state,states.next());
     }
 }

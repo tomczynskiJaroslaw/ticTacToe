@@ -1,12 +1,12 @@
 package ticTacToe.WinMethod;
 
+import lombok.AllArgsConstructor;
 import ticTacToe.Model;
+import ticTacToe.ReadOnlyModel;
 import ticTacToe.XO;
-
-public class DiagonalRightUp extends WinMethod {
-    public DiagonalRightUp(Model model) {
-        super(model);
-    }
+@AllArgsConstructor
+class DiagonalRightUp implements WinMethod {
+    private final ReadOnlyModel model;
 
     @Override
     public boolean method(int x, int y, XO xo) {
