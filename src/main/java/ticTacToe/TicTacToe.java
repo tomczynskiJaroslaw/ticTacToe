@@ -1,6 +1,7 @@
 package ticTacToe;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ticTacToe.WinMethod.WinMethod;
 import ticTacToe.WinMethod.WinMethods;
@@ -26,7 +27,9 @@ public class TicTacToe extends Application {
         states.addListener(stateO,stateX);
         model.addListenerStates(states);
         model.addListenerWinMethods(winMethods);
-        View view = new View(stage, states, readOnlyModel);
+        Player player = new Player();
+        MainScene mainScene = new MainScene(stage,states,readOnlyModel);
+        View view = new View(player.getScene(),mainScene.getScene(),stage);
         System.out.println("---");
         buttonEnabled.setView(view);
 
