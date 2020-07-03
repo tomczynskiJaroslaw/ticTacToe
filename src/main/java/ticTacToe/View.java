@@ -1,40 +1,47 @@
 package ticTacToe;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import lombok.SneakyThrows;
 
 public class View {
-    private Scene players;
-    private Scene mainScene;
+    private Scene scene;
     private final Stage stage;
+    private final States states;
+    private final ReadOnlyModel readOnlyModel;
+    private VBox vBox = new VBox();
 
 
-    public View(Scene players, Scene mainScene, Stage stage) {
-        this.players = players;
-        this.mainScene = mainScene;
+    public View(Stage stage, States states, ReadOnlyModel readOnlyModel) {
         this.stage = stage;
+        this.states = states;
+        this.readOnlyModel = readOnlyModel;
         init();
     }
-    @SneakyThrows
-    private void init(){
-        FXMLLoader player = new FXMLLoader(getClass().getClassLoader().getResource("fxml_example.fxml"));
-        ControllerX controller = player.getController();
-//
-        Listener listener = new Listener(stage,mainScene);
-        controller.setListener(listener);
-        stage.setScene(mainScene);
+
+    private void init() {
+        for (int i=0;i<3;i++){
+            HBox hBox = new HBox();
+            for (int j=0;j<3;j++){
+                Button button = new Button();
+                int finalI = i;
+                int finalJ = j;
+                button.setOnAction((e)->{
+                    states.start(finalI,finalJ);
+                    button.setText(readOnlyModel.get(finalI,finalJ).toString());
+                });
+                hBox.getChildren().add(button);
+            }
+            vBox.getChildren().add(hBox);
+        }
+        vBox.getStylesheets().add("CSS.css");
+        stage.setScene(new Scene(vBox,600,600));
         stage.show();
     }
 
-    public void setDisableButtons(){
-//        //for (int i=0;i<3;i++) {
-//        vBox.setDisable(true);
-////        List<Node> nodes = vBox.getChildren();
-////            for (int j = 0; j < 3; j++) {
-////                nodes.get(0).setDisable(true);
-////            }
-//        //}
+    public void setDisableButtons() {
+        vBox.setDisable(true);
     }
 }

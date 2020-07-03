@@ -1,0 +1,23 @@
+HBox, VBox {
+    -fx-alignment: center ;
+}
+.label
+{
+    -fx-background-color:Black;
+    -fx-text-fill:white;
+    -fx-font-size:50;
+    -fx-border-color: Wheat;
+    -fx-border-radius: 5;
+}
+.button
+{
+    -fx-background-color:Black;
+    -fx-font-family:courier_new;
+    -fx-text-fill:White;
+    -fx-border-color: Wheat;
+    -fx-border-radius: 5;
+    -fx-font-size:30;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+
+}

@@ -9,7 +9,6 @@ public class Model {
     private final int COUNT = 3;
 
     private final List<States> stets;
-//    private final Win win;
 
     private XO[][] xos;
 
@@ -17,8 +16,6 @@ public class Model {
 
     public Model(List<States> stets) {
         this.stets = stets;
-//        this.win = win;
-//        this.winMethods=winMethods;
         prepareXOS();
 
     }
